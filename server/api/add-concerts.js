@@ -7,18 +7,13 @@ export default defineEventHandler(async (event) => {
     // Read the JSON body from the request
 
     // Verify API key
-    const headers = getHeaders(event);
-    console.log('All headers:', headers);
-    const apiKey = getRequestHeader(event, 'API_KEY');
-    console.log('apiKey', apiKey);
+    const apiKey = getRequestHeader(event, 'x-api-key');
     if (!apiKey) {
       throw createError({
         statusCode: 401,
         statusMessage: 'API key is required'
       });
     }
-
-    console.log('process.env.API_HASH', process.env.API_HASH);
     
     // Hash the API key and compare with stored hash
     const hashedApiKey = crypto.createHash('sha256').update(apiKey).digest('hex');
