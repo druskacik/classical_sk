@@ -9,6 +9,7 @@ WORKDIR /usr/src/nuxt-app
 COPY . /usr/src/nuxt-app/
 RUN npm install
 RUN npm run build
+RUN npm run migrations
 
 EXPOSE 3000
 
