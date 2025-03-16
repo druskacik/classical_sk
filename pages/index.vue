@@ -11,6 +11,11 @@
 </template>
 
 <script setup>
+
+useHead({
+    title: 'Klasická hudba na Slovensku',
+})
+
 const { data: concerts } = await useFetch('/api/get-concerts')
 
 // Group concerts by month

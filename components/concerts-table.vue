@@ -3,17 +3,31 @@
         <table class="min-w-full bg-white border border-gray-200">
             <tbody class="divide-y divide-gray-200">
             <tr v-for="concert in concerts" :key="concert.id" class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-sm text-gray-900">
-                <span class="hidden lg:block">{{ formatDate(concert.date) }}</span>
-                <span class="lg:hidden">{{ formatDateShort(concert.date) }}</span>
+                <td class="px-6 py-4">
+                    <!-- Mobile layout (flex column) -->
+                    <div class="lg:hidden flex flex-col gap-2">
+                        <span class="text-sm text-gray-900">{{ formatDate(concert.date) }}</span>
+                        <div class="flex flex-wrap gap-2">
+                            <TableBadge class="ml-0" :label="concert.city" variant="subtle" />
+                            <TableBadge class="ml-0" :label="concert.source" />
+                        </div>
+                        <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
+                            {{ concert.title }}
+                        </a>
+                    </div>
+
+                    <!-- Desktop layout (original) -->
+                    <div class="hidden lg:block">
+                        <span class="text-sm text-gray-900">{{ formatDate(concert.date) }}</span>
+                    </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-900 font-medium">
-                    <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="hover:underline">{{ concert.title }}</a>
+                <td class="px-6 py-4 hidden lg:table-cell">
+                    <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
+                        {{ concert.title }}
+                    </a>
                     <TableBadge class="ml-2" :label="concert.city" variant="subtle" />
                     <TableBadge class="ml-2" :label="concert.source" />
                 </td>
-                <!-- <td class="px-6 py-4 text-sm text-gray-900">{{ concert.venue }}</td> -->
-                <!-- <td class="px-6 py-4 text-sm text-gray-900">{{ formatTime(concert.time_from, concert.time_to) }}</td> -->
             </tr>
             </tbody>
         </table>
@@ -32,14 +46,6 @@
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
-    })
-  }
-  
-  const formatDateShort = (dateString) => {
-    return new Date(dateString).toLocaleDateString('sk-SK', {
-      year: 'numeric',
-      month: 'numeric',
       day: 'numeric'
     })
   }
