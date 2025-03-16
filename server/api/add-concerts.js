@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     // Read the JSON body from the request
 
     // Verify API key
-    const apiKey = getRequestHeader(event, 'API_KEY');
+    const apiKey = getHeader(event, 'API_KEY');
     if (!apiKey) {
       throw createError({
         statusCode: 401,
@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
     
     // Hash the API key and compare with stored hash
     const hashedApiKey = crypto.createHash('sha256').update(apiKey).digest('hex');
-    console.log(hashedApiKey);
     
     if (hashedApiKey !== process.env.API_HASH) {
       throw createError({
@@ -86,8 +85,8 @@ export default defineEventHandler(async (event) => {
 
   } catch (error) {
     throw createError({
-      statusCode: 500,
-      statusMessage: error.message
+      statusCode: error.statusCode || 500,
+      statusMessage: error.statusMessage || 'Internal Server Error'
     });
   }
 });
