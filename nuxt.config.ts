@@ -6,4 +6,16 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light'
   },
+  app: {
+    head: {
+      script: [
+        {
+          src: 'https://umami.cr.bswatcher.com/script.js',
+          'data-website-id': 'f1439093-e84e-4c8b-92d8-0db2e3d7f2e4',
+          async: true,
+          defer: true,
+        }
+      ]
+    }
+  }
 })
