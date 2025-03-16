@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     // Read the JSON body from the request
 
     // Verify API key
-    const apiKey = getHeader(event, 'API_KEY');
+    const apiKey = getRequestHeader(event, 'API_KEY');
     console.log('apiKey', apiKey);
     if (!apiKey) {
       throw createError({
