@@ -8,8 +8,10 @@
                     <div class="lg:hidden flex flex-col gap-2">
                         <span class="text-sm text-gray-900">{{ formatDate(concert.date) }}</span>
                         <div class="flex flex-wrap gap-2">
-                            <TableBadge class="ml-0" :label="concert.city" variant="subtle" />
-                            <TableBadge class="ml-0" :label="concert.source" />
+                            <NuxtLink :to="`/${concert.city}`">
+                                <TableBadge :label="concert.city" variant="outline" />
+                            </NuxtLink>
+                            <TableBadge :label="concert.source"/>
                         </div>
                         <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
                             {{ concert.title }}
@@ -25,8 +27,10 @@
                     <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
                         {{ concert.title }}
                     </a>
-                    <TableBadge class="ml-2" :label="concert.city" variant="subtle" />
-                    <TableBadge class="ml-2" :label="concert.source" />
+                    <NuxtLink :to="`/${concert.city}`" class="ml-2">
+                        <TableBadge :label="concert.city" variant="outline" />
+                    </NuxtLink>
+                    <TableBadge class="ml-2" :label="concert.source"/>
                 </td>
             </tr>
             </tbody>

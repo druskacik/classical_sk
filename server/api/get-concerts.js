@@ -5,10 +5,21 @@ export default defineEventHandler(async (event) => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
-    const concerts = await knex('classical_concert')
-      .where('date', '>=', today)
-      .orderBy('date', 'asc')
-      .select('*')
+    const query = getQuery(event)
+    let concerts;
+    
+    if (query.city) {
+      concerts = await knex('classical_concert')
+        .where('city', query.city)
+        .where('date', '>=', today)
+        .orderBy('date', 'asc')
+        .select('*')
+    } else {
+      concerts = await knex('classical_concert')
+        .where('date', '>=', today)
+        .orderBy('date', 'asc')
+        .select('*')
+    }
 
     return concerts
   } catch (error) {

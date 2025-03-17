@@ -16,7 +16,7 @@ useHead({
     title: 'Klasická hudba na Slovensku',
 })
 
-const { data: concerts } = await useFetch('/api/get-concerts')
+const { data: concerts } = await useAsyncData('concerts', () => $fetch('/api/get-concerts'))
 
 // Group concerts by month
 const groupedConcerts = computed(() => {

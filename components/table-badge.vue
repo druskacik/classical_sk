@@ -1,5 +1,5 @@
 <template>
-    <UBadge :color="color" :variant="variant" class="ml-2">
+    <UBadge :color="color" :variant="variant">
         {{ label }}
     </UBadge>
 </template>
@@ -31,8 +31,7 @@ const color = computed(() => {
         const value = (hash >> (i * 8)) & 0xFF;
         color += ('00' + value.toString(16)).substr(-2);
       }
-      
-      // Tailwind-compatible named colors for specific cases
+
       if (color.startsWith('#f')) return 'red';
       if (color.startsWith('#e')) return 'orange';
       if (color.startsWith('#d')) return 'amber';
