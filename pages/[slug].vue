@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto py-8 px-4">
-      <h1 class="text-3xl font-serif mb-8 text-center">Koncerty klasickej hudby na Slovensku</h1>
+      <h1 class="text-3xl font-serif mb-8 text-center">Koncerty klasickej hudby {{ slug }}</h1>
       <div class="container mx-auto py-8 px-4">
         <div v-for="(concertGroup, month) in groupedConcerts" :key="month" class="mb-8">
           <h2 class="text-2xl font-serif mb-4 capitalize">{{ month }}</h2>
@@ -34,7 +34,7 @@
   })
 
   useHead({
-      title: `Klasická hudba na Slovensku - ${slug}`,
+      title: `Klasická hudba ${slug}`,
   })
   </script>
   
