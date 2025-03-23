@@ -1,6 +1,6 @@
 <template>
     <!-- Composer Filter Section -->
-    <div class="pl-6 pt-2 pb-6">
+    <div class="px-6 pt-2 pb-6">
         <h3 class="text-lg font-serif mb-4">Filtrovať podľa skladateľa</h3>
         <div class="mt-4">
             <div class="w-full lg:w-3/5 relative composer-filter" ref="composerFilterRef">
