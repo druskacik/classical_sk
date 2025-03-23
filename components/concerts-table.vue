@@ -13,9 +13,17 @@
                             </NuxtLink>
                             <TableBadge :label="concert.source"/>
                         </div>
-                        <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
-                            {{ concert.title }}
-                        </a>
+                        <div class="flex flex-wrap items-baseline">
+                            <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline mr-2">
+                                {{ concert.title }}
+                            </a>
+                            <span v-for="(composer, index) in concert.composers" :key="composer.id" class="inline-block">
+                            <span v-if="index > 0" class="text-gray-500">, </span>
+                                <span class="text-sm text-gray-500 font-medium hover:underline cursor-pointer" @click="addComposer(composer.name)">
+                                    {{ formatComposerName(composer.name) }}
+                                </span>
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Desktop layout (original) -->
@@ -27,10 +35,16 @@
                     <a :href="concert.url" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-900 font-medium hover:underline">
                         {{ concert.title }}
                     </a>
-                    <NuxtLink :to="`/${concert.city}`" class="ml-2">
+                    <span @click="selectCity(concert.city)" class="ml-2 cursor-pointer">
                         <TableBadge :label="concert.city" variant="outline" />
-                    </NuxtLink>
-                    <TableBadge class="ml-2" :label="concert.source"/>
+                    </span>
+                    <TableBadge class="ml-2 mr-2" :label="concert.source"/>
+                    <span v-for="(composer, index) in concert.composers" :key="composer.id" class="inline-block">
+                      <span v-if="index > 0" class="text-gray-500">, </span>
+                        <span class="text-sm text-gray-500 font-medium hover:underline cursor-pointer" @click="addComposer(composer.name)">
+                            {{ formatComposerName(composer.name) }}
+                        </span>
+                    </span>
                 </td>
             </tr>
             </tbody>
@@ -39,9 +53,19 @@
   </template>
   
   <script setup>
+
+  const route = useRoute()
   const props = defineProps({
     concerts: {
       type: Array,
+      required: true
+    },
+    addComposer: {
+      type: Function,
+      required: true
+    },
+    selectCity: {
+      type: Function,
       required: true
     }
   })  
@@ -52,6 +76,11 @@
       month: 'long',
       day: 'numeric'
     })
+  }
+
+  const formatComposerName = (composerName) => {
+    const parts = composerName.split(' ')
+    return parts[parts.length - 1]
   }
   
   const formatTime = (timeFrom, timeTo) => {

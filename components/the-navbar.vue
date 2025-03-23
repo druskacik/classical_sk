@@ -12,7 +12,7 @@
                     variant="link"
                     :highlight="false"
                     :items="items"
-                    class="w-full ml-4"
+                    class="w-full ml-4 z-1"
                 />
             </div>
         </div>
@@ -21,9 +21,7 @@
 
 <script setup>
 
-const { data: cities } = await useAsyncData('cities', () => $fetch('/api/get-cities'))
-
-
+const cities = useState('cities')
 
 const items = ref([
     {

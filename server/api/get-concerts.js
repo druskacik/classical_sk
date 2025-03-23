@@ -1,4 +1,4 @@
-import knex from '../utils/connection.js'
+import ClassicalConcert from '../models/ClassicalConcert.cjs'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -6,19 +6,31 @@ export default defineEventHandler(async (event) => {
     today.setHours(0, 0, 0, 0)
 
     const query = getQuery(event)
-    let concerts;
+    const composers = query.composers ? query.composers.split(',') : []
+    const city = query.city || null
     
-    if (query.city) {
-      concerts = await knex('classical_concert')
-        .where('city', query.city)
-        .where('date', '>=', today)
-        .orderBy('date', 'asc')
-        .select('*')
-    } else {
-      concerts = await knex('classical_concert')
-        .where('date', '>=', today)
-        .orderBy('date', 'asc')
-        .select('*')
+    // Start building the query
+    let concertQuery = ClassicalConcert.query()
+      .where('date', '>=', today)
+      .orderBy('date', 'asc')
+      .withGraphFetched('composers')
+      .select('url', 'title', 'date', 'city', 'source', 'venue', 'composers')
+    
+    // Apply city filter if provided
+    if (city) {
+      concertQuery = concertQuery.where('city', city)
+    }
+    
+    // Get the concerts
+    let concerts = await concertQuery
+    
+    // Filter by composers if provided
+    if (composers.length > 0) {
+      concerts = concerts.filter(concert => {
+        return concert.composers.some(composer => 
+          composers.includes(composer.name)
+        )
+      })
     }
 
     return concerts
