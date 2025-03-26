@@ -49,7 +49,15 @@
       {
         name: 'Konvergencie',
         url: 'https://www.konvergencie.sk',
-      }
+      },
+      {
+        name: 'Dom kultúry Ružinov',
+        url: 'https://www.cultusruzinov.sk/',
+      },
+      {
+        name: 'Slovenská televízia a rozhlas',
+        url: 'https://www.stvr.sk/',
+      },
     ],
     'Košice': [
       {

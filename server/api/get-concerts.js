@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
     let concertQuery = ClassicalConcert.query()
       .where('date', '>=', today)
       .orderBy('date', 'asc')
+      .orderBy('time_from', 'asc')
       .withGraphFetched('composers')
       .select('url', 'title', 'date', 'city', 'source', 'venue', 'composers')
     
@@ -33,7 +34,11 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    return concerts
+    return concerts.map(concert => ({
+      ...concert,
+      // Hotfix - this should be fixed in the database
+      title: concert.title.replace(/\s+/g, ' '),
+    }))
   } catch (error) {
     console.error('Error fetching concerts:', error)
     return {
