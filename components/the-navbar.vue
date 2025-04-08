@@ -94,6 +94,8 @@ const items = ref([
         slot: 'cities'
     },
     { label: 'Zdroje', href: '/zdroje' },
+    // { label: 'Blog', href: '/blog' },
+    { label: 'O projekte', href: '/blog/o-projekte' },
     { label: 'Kontakt', href: '/kontakt' },
 ]);
 </script>

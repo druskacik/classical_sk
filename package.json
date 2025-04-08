@@ -11,6 +11,7 @@
     "migrations": "knex migrate:latest"
   },
   "dependencies": {
+    "@nuxt/content": "^3.4.0",
     "@nuxt/fonts": "^0.11.0",
     "@nuxt/ui": "^3.0.0",
     "knex": "^3.1.0",
