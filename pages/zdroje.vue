@@ -51,6 +51,10 @@
         url: 'https://www.konvergencie.sk',
       },
       {
+        name: 'Galéria Nedbalka',
+        url: 'https://nedbalka.sk',
+      },
+      {
         name: 'Dom kultúry Ružinov',
         url: 'https://www.cultusruzinov.sk/',
       },
