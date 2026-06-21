@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
 
     const cities = await knex('classical_concert')
       .select('city')
+      .where('country_code', 'SK')
       .count('* as count')
       .groupBy('city')
       .orderBy('count', 'desc')

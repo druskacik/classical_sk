@@ -6,6 +6,8 @@ export default defineEventHandler(async (event) => {
     const composers = await knex('composer')
       .select('composer.name')
       .join('classical_concert_composer', 'composer.id', '=', 'classical_concert_composer.composer_id')
+      .join('classical_concert', 'classical_concert.id', '=', 'classical_concert_composer.classical_concert_id')
+      .where('classical_concert.country_code', 'SK')
       .count('classical_concert_composer.composer_id as count')
       .groupBy('composer.name')
       .orderBy('count', 'desc')

@@ -1,4 +1,5 @@
-const knex = require('knex');
+const knexModule = require('knex');
+const knex = knexModule.default || knexModule.knex || knexModule;
 
 require('dotenv/config')
 

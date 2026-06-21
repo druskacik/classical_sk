@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
     // Start building the query
     let concertQuery = ClassicalConcert.query()
       .where('date', '>=', today)
+      .where('country_code', 'SK')
       .orderBy('date', 'asc')
       .orderBy('time_from', 'asc')
       .withGraphFetched('composers')
