@@ -1,4 +1,5 @@
 import ClassicalConcert from '../models/ClassicalConcert.cjs'
+import { raw } from 'objection'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -11,16 +12,36 @@ export default defineEventHandler(async (event) => {
     
     // Start building the query
     let concertQuery = ClassicalConcert.query()
+      .leftJoin('city as canonical_city', 'classical_concert.city_id', 'canonical_city.id')
       .where('date', '>=', today)
-      .where('country_code', 'SK')
+      .where('country_code_resolved', 'SK')
       .orderBy('date', 'asc')
       .orderBy('time_from', 'asc')
       .withGraphFetched('composers')
-      .select('url', 'title', 'date', 'city', 'source', 'venue', 'composers')
+      .select(
+        'classical_concert.id',
+        'url',
+        'title',
+        'date',
+        'time_from',
+        'time_to',
+        'source',
+        'venue',
+        raw('COALESCE(??, ??) AS ??', [
+          'canonical_city.local_name',
+          'classical_concert.city_raw',
+          'city',
+        ]),
+      )
     
     // Apply city filter if provided
     if (city) {
-      concertQuery = concertQuery.where('city', city)
+      concertQuery = concertQuery.where(builder => {
+        builder
+          .where('canonical_city.local_name', city)
+          .orWhere('canonical_city.english_name', city)
+          .orWhere('classical_concert.city_raw', city)
+      })
     }
     
     // Get the concerts
